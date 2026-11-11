@@ -1,5 +1,5 @@
 @echo off
-cd /d "%~dp0"
+cd /d "%~dp0.."
 echo --- Guardando cambios en Fantasy Odyssey ---
 git add .
 set /p mensaje="Escribe el mensaje para el commit: "
