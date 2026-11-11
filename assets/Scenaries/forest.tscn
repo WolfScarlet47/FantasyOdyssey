@@ -26,6 +26,8 @@ code = "shader_type canvas_item;\n\nfloat hash21(vec2 p) {\n    p = fract(p * ve
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_forest_ground"]
 shader = SubResource("Shader_forest_ground")
 
+[node name="ForestMap" type="Node2D" unique_id=2090356301]
+
 [node name="Ground" type="ColorRect" parent="." unique_id=1065461867]
 offset_right = 2160.0
 offset_bottom = 1440.0
