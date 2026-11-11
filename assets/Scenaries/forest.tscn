@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cc6jpc450f5bb"]
+
+[ext_resource type="Texture2D" uid="uid://q3g3mj0fdgq2" path="res://assets/img/character/PixelZuo.png" id="1_xn0ck"]
+[ext_resource type="Texture2D" uid="uid://dncj5qnpw8sqn" path="res://assets/img/character/PixelZuoAnimate.png" id="2_1ul24"]
+[ext_resource type="Script" uid="uid://dj7kuhbceihas" path="res://assets/Scenaries/animated_sprite_2d.gd" id="3_1ul24"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8w0r3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xn0ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_1ul24")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="Node2D" type="Node2D" unique_id=2090356301]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1309597124]
+position = Vector2(572, 337)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_8w0r3")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("3_1ul24")
