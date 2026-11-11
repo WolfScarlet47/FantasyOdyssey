@@ -20,17 +20,17 @@ animations = [{
 
 [node name="ForestMap" type="Node2D" unique_id=2090356301]
 
-[node name="Ground" type="ColorRect" parent="."]
+[node name="Ground" type="ColorRect" parent="." unique_id=1065461867]
 offset_right = 2160.0
 offset_bottom = 1440.0
 color = Color(0.105, 0.16, 0.12, 1)
 
-[node name="MapBoundary" type="Line2D" parent="."]
+[node name="MapBoundary" type="Line2D" parent="." unique_id=249749554]
 points = PackedVector2Array(0, 0, 2160, 0, 2160, 1440, 0, 1440, 0, 0)
 width = 8.0
 default_color = Color(0.72, 0.78, 0.63, 1)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1309597124]
+[node name="Character" type="AnimatedSprite2D" parent="." unique_id=1309597124]
 position = Vector2(1080, 720)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_8w0r3")
@@ -38,8 +38,7 @@ animation = &"idle"
 autoplay = "idle"
 script = ExtResource("3_1ul24")
 
-[node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
-position_smoothing_enabled = false
+[node name="Camera2D" type="Camera2D" parent="Character" unique_id=934744394]
 limit_left = 0
 limit_top = 0
 limit_right = 2160
