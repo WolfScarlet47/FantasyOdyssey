@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://dj7kuhbceihas" path="res://assets/Scenaries/animated_sprite_2d.gd" id="3_1ul24"]
 [ext_resource type="Texture2D" uid="uid://byx6p3btnvl2q" path="res://assets/img/enemy/willowisp.png" id="4_wisp"]
 [ext_resource type="Script" path="res://assets/Scenaries/enemy_chase.gd" id="5_chase"]
+[ext_resource type="Texture2D" path="res://assets/img/ui/health_frame.svg" id="6_frame"]
+[ext_resource type="Texture2D" path="res://assets/img/ui/health_fill.svg" id="7_fill"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8w0r3"]
 animations = [{
@@ -19,6 +21,12 @@ animations = [{
 "name": &"idle",
 "speed": 4.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape_player"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape_enemy"]
+radius = 18.0
 
 [sub_resource type="Shader" id="Shader_forest_ground"]
 code = "shader_type canvas_item;\n\nfloat hash21(vec2 p) {\n    p = fract(p * vec2(123.34, 456.21));\n    p += dot(p, p + 45.32);\n    return fract(p.x * p.y);\n}\n\nfloat noise2(vec2 p) {\n    vec2 i = floor(p);\n    vec2 f = fract(p);\n    f = f * f * (3.0 - 2.0 * f);\n    float a = hash21(i);\n    float b = hash21(i + vec2(1.0, 0.0));\n    float c = hash21(i + vec2(0.0, 1.0));\n    float d = hash21(i + vec2(1.0, 1.0));\n    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);\n}\n\nvoid fragment() {\n    vec2 p = UV * vec2(180.0, 120.0);\n    float broad = noise2(p * 0.10);\n    float detail = noise2(p * 0.85);\n    float fine = noise2(p * 3.5);\n    float variation = broad * 0.48 + detail * 0.37 + fine * 0.15;\n    vec3 soil = vec3(0.105, 0.145, 0.095);\n    vec3 moss = vec3(0.235, 0.285, 0.145);\n    vec3 ground = mix(soil, moss, smoothstep(0.28, 0.78, variation));\n    float fleck = step(0.965, hash21(floor(p * 1.8)));\n    ground = mix(ground, vec3(0.34, 0.32, 0.19), fleck * 0.28);\n    COLOR = vec4(ground, 1.0);\n}"
@@ -53,9 +61,45 @@ limit_top = 0
 limit_right = 2160
 limit_bottom = 1440
 
-[node name="WillOWisp" type="Sprite2D" parent="." unique_id=1827300041]
+[node name="DamageArea" type="Area2D" parent="Character"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character/DamageArea"]
+shape = SubResource("CircleShape_player")
+
+[node name="WillOWisp" type="Area2D" parent="." unique_id=1827300041]
 position = Vector2(1450, 720)
-scale = Vector2(4, 4)
-texture = ExtResource("4_wisp")
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("5_chase")
 target_path = NodePath("../Character")
+
+[node name="Sprite" type="Sprite2D" parent="WillOWisp"]
+scale = Vector2(4, 4)
+texture = ExtResource("4_wisp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WillOWisp"]
+shape = SubResource("CircleShape_enemy")
+
+[node name="HealthHUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthHUD"]
+offset_left = 80.0
+offset_top = 19.0
+offset_right = 255.0
+offset_bottom = 53.0
+mouse_filter = 2
+min_value = 0.0
+max_value = 100.0
+value = 100.0
+fill_mode = 0
+texture_progress = ExtResource("7_fill")
+
+[node name="Frame" type="TextureRect" parent="HealthHUD"]
+offset_right = 262.0
+offset_bottom = 73.0
+mouse_filter = 2
+texture = ExtResource("6_frame")
+expand_mode = 1
