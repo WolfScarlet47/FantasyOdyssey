@@ -86,10 +86,10 @@ shape = SubResource("CircleShape_enemy")
 layer = 10
 
 [node name="HealthBar" type="TextureProgressBar" parent="HealthHUD"]
-offset_left = 80.0
-offset_top = 19.0
-offset_right = 255.0
-offset_bottom = 53.0
+offset_left = 93.0
+offset_top = 24.0
+offset_right = 244.0
+offset_bottom = 49.0
 mouse_filter = 2
 min_value = 0.0
 max_value = 100.0
