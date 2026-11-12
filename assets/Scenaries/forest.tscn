@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://q3g3mj0fdgq2" path="res://assets/img/character/PixelZuo.png" id="1_xn0ck"]
 [ext_resource type="Texture2D" uid="uid://dncj5qnpw8sqn" path="res://assets/img/character/PixelZuoAnimate.png" id="2_1ul24"]
 [ext_resource type="Script" uid="uid://dj7kuhbceihas" path="res://assets/Scenaries/animated_sprite_2d.gd" id="3_1ul24"]
-[ext_resource type="Texture2D" uid="uid://byx6p3btnvl2q" path="res://assets/img/enemy/willowisp.png" id="4_wisp"]
-[ext_resource type="Script" uid="uid://igthusfyedew" path="res://assets/Scenaries/enemy_chase.gd" id="5_chase"]
+[ext_resource type="PackedScene" path="res://assets/Scenaries/enemy.tscn" id="8_enemy"]
 [ext_resource type="Texture2D" uid="uid://cb3wph4mj8hai" path="res://assets/img/ui/health_frame.svg" id="6_frame"]
 [ext_resource type="Texture2D" uid="uid://bb1b5fr466icg" path="res://assets/img/ui/health_fill.svg" id="7_fill"]
 
@@ -100,18 +99,8 @@ position = Vector2(0, 2.5)
 scale = Vector2(1, 1.75)
 shape = SubResource("CircleShape_player")
 
-[node name="WillOWisp" type="Area2D" parent="." unique_id=1827300041]
+[node name="WillOWisp" parent="." unique_id=1827300041 instance=ExtResource("8_enemy")]
 position = Vector2(1450, 720)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("5_chase")
-
-[node name="Sprite" type="Sprite2D" parent="WillOWisp" unique_id=1338393725]
-texture = ExtResource("4_wisp")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WillOWisp" unique_id=1626686897]
-scale = Vector2(1.5, 1.5)
-shape = SubResource("CircleShape_enemy")
 
 [node name="HealthHUD" type="CanvasLayer" parent="." unique_id=1585127154]
 layer = 10
