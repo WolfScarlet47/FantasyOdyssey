@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Area2D
 
 @export var target_path: NodePath = NodePath("../Character")
 @export var speed: float = 90.0
@@ -10,13 +10,14 @@ var target: Node2D
 
 
 func _ready() -> void:
+	add_to_group("enemies")
 	target = get_node_or_null(target_path) as Node2D
 	if target == null:
 		push_warning("EnemyChase: no se encontró el objetivo en target_path.")
 
 
 func _physics_process(delta: float) -> void:
-	if not is_instance_valid(target):
+	if not is_instance_valid(target) or not target.visible:
 		return
 
 	var direction := global_position.direction_to(target.global_position)
