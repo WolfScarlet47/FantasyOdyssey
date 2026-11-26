@@ -15,13 +15,14 @@ var barra_vida: TextureProgressBar
 
 
 func _ready() -> void:
+	# Busca la barra de vida y conecta las zonas de contacto.
 	barra_vida = get_node("../HealthHUD/HealthBar") as TextureProgressBar
 	$DamageArea.area_entered.connect(_on_damage_area_entered)
 	$DamageArea.area_exited.connect(_on_damage_area_exited)
 	_actualizar_barra_vida()
 
 	# Zuo dispara automáticamente cada diez segundos.
-	_crear_temporizador(10.0, _disparar_al_enemigo_mas_cercano)
+	_crear_temporizador(2.0, _disparo)
 
 
 func _process(delta: float) -> void:
@@ -39,16 +40,17 @@ func _process(delta: float) -> void:
 	position.x = clampf(position.x, MARGEN_LIMITE, TAMANO_MAPA.x - MARGEN_LIMITE)
 	position.y = clampf(position.y, MARGEN_LIMITE, TAMANO_MAPA.y - MARGEN_LIMITE)
 
-	# Si un enemigo está tocando a Zuo, le resta vida poco a poco.
+	# Si un enemigo toca a Zuo, le resta vida poco a poco.
 	if not enemigos_en_contacto.is_empty():
 		vida = maxf(0.0, vida - DANIO_POR_SEGUNDO * delta)
 		_actualizar_barra_vida()
+
 		if vida <= 0.0:
 			visible = false
 			$DamageArea.set_deferred("monitoring", false)
 
 
-# Crea el temporizador para una acción automática.
+# Crea un temporizador para ejecutar una acción automáticamente.
 func _crear_temporizador(intervalo: float, accion: Callable) -> void:
 	var temporizador := Timer.new()
 	temporizador.wait_time = intervalo
@@ -57,8 +59,8 @@ func _crear_temporizador(intervalo: float, accion: Callable) -> void:
 	temporizador.start()
 
 
-# Busca el enemigo más cercano que esté dentro de los 250 píxeles.
-func _disparar_al_enemigo_mas_cercano() -> void:
+# Busca al enemigo más cercano dentro del alcance de disparo.
+func _disparo() -> void:
 	if vida <= 0.0 or not visible:
 		return
 
@@ -75,10 +77,11 @@ func _disparar_al_enemigo_mas_cercano() -> void:
 			distancia_menor = distancia
 			enemigo_cercano = enemigo
 
-	# Si no hay enemigos cerca, este disparo se omite.
+	# Si no hay enemigos cerca, no dispara.
 	if not is_instance_valid(enemigo_cercano):
 		return
 
+	# Crea el proyectil y lo dirige hacia el enemigo.
 	var proyectil := ESCENA_PROYECTIL.instantiate() as Area2D
 	get_parent().add_child(proyectil)
 	proyectil.global_position = global_position
@@ -91,7 +94,7 @@ func _on_damage_area_entered(area: Area2D) -> void:
 		enemigos_en_contacto.append(area)
 
 
-# Quita de la lista a los enemigos que dejan de tocar a Zuo.
+# Quita de la lista los enemigos que dejan de tocar a Zuo.
 func _on_damage_area_exited(area: Area2D) -> void:
 	enemigos_en_contacto.erase(area)
 

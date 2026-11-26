@@ -1,19 +1,20 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bam46p6vi8jja"]
 
-[ext_resource type="Texture2D" path="res://assets/img/enemy/willowisp.png" id="1_sprite"]
-[ext_resource type="Script" path="res://assets/Scenaries/enemy_chase.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://igthusfyedew" path="res://assets/Scenaries/enemy_chase.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://dygh5ri0buemi" path="res://assets/img/enemy/Goblin.png" id="2_stnbe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape_enemy"]
 radius = 18.0
 
-[node name="Enemy" type="Area2D"]
+[node name="Enemy" type="Area2D" unique_id=1653744870]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("2_script")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_sprite")
+[node name="Sprite" type="Sprite2D" parent="." unique_id=945936365]
+scale = Vector2(4, 4)
+texture = ExtResource("2_stnbe")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=359936568]
 scale = Vector2(1.5, 1.5)
 shape = SubResource("CircleShape_enemy")
